@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: Todo_Nest
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      
+      
+  back-end:
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    container_name: backend
+    working_dir: /app
+    volumes: 
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      DATABASE_URL: postgresql://postgres:12345@localhost:5432/Todo_Nest
+      JWT_SECRET: your_jwt_secret_key
+    tty: true
+    ports: 
+      - "3000:3000"
+    command: npm run start
+    depends_on:
+       - db
+
+volumes:
+  db_data:

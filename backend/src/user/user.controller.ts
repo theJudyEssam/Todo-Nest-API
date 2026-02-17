@@ -1,7 +1,8 @@
-import { Controller, Delete, Get } from '@nestjs/common';
+import { Controller, Delete, Get, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Public } from 'src/auth/decorator/public.decorator';
 
+@Public()
 @Controller('/users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -12,17 +13,18 @@ export class UserController {
   }
 
   @Get('/:id')
-  async getUserById(id: string) {
+  async getUserById(@Param("id") id: string) {
+    console.log("id in controller:", id);
     return this.userService.getUserById(id);
   }
 
   @Get('/email/:email')
-  async getUserByEmail(email: string) {
+  async getUserByEmail(@Param("email") email: string) {
     return this.userService.getUserByEmail(email);
   }
 
   @Delete('/:id')
-  async deleteUser(id: string) {
+  async deleteUser(@Param("id") id: string) {
     return this.userService.deleteUser(id);
   }
 }

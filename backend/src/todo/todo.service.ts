@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { TodoCreateInput } from 'generated/prisma/models';
 import { PrismaService } from 'prisma/prisma.service';
-import { CreateTodoDto } from 'src/dtos/todoDto';
+import { CreateTodoDto } from 'src/crud-dtos/todoDto';
 
 @Injectable()
 export class TodoService {
@@ -19,11 +19,19 @@ export class TodoService {
     });
   }
 
-  async createTodo(todo: TodoCreateInput) {
-    return this.prisma.todo.create({
-      data: todo,
-    });
-  }
+ async createTodo(todo:CreateTodoDto) {
+  console.log("user id in service:", todo.userId);
+  console.log("user content in service:", todo.content);
+  return await this.prisma.todo.create({
+    data: {
+      content: todo.content,
+      completed: todo.completed ?? false,
+      user: {
+        connect: { id: todo.userId} 
+      }
+    }
+  });
+}
 
   async deleteTodo(id: number) {
     return this.prisma.todo.delete({
@@ -50,7 +58,7 @@ export class TodoService {
         id,
       },
       data: {
-        todo_text: todoText,
+        content: todoText,
       },
     });
   }

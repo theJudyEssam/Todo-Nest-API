@@ -1,5 +1,5 @@
 export class CreateTodoDto {
-  todo_text: string;
-  user_id: string;
+  content: string;
+  userId: string;
   completed: boolean;
 }
