@@ -10,7 +10,7 @@ generator client {
   moduleFormat    = "cjs"
   previewFeatures = ["clientExtensions"]
   engineType      = "binary"
-  binaryTargets   = ["native"]
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
