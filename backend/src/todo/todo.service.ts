@@ -62,5 +62,27 @@ export class TodoService {
       },
     });
   }
+
+  async approveTodo(id: number) {
+    return this.prisma.todo.update({
+      where: {
+        id,
+      },
+      data: {
+        status: 'APPROVED',
+      },
+    });
+  }
+  
+  async rejectTodo(id: number) {
+    return this.prisma.todo.update({
+      where: {
+        id,
+      },
+      data: {
+        status: 'REJECTED',
+      },
+    });
+  }
 }
 export default TodoService;

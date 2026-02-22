@@ -8,7 +8,6 @@ export class JwtGuard extends AuthGuard('jwt') {
   constructor(private reflector: Reflector) {
     super();
   }
-
   canActivate(
     context: ExecutionContext,
   ): Promise<boolean> | boolean | Observable<boolean> {

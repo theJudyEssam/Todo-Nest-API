@@ -31,7 +31,7 @@ export class AuthService {
 
   async login(dto: LoginRequestDto) {
     const existingUser = await this.validateUser(dto.email, dto.password);
-    const payload = { email: dto.email, id: existingUser.id };
+    const payload = { email: dto.email, id: existingUser.id, role: existingUser.role };
     return {
       accessToken: this.jwtService.sign(payload),
     };
@@ -51,12 +51,14 @@ export class AuthService {
       name: userDto.name.trim(),
       email: userDto.email.toLowerCase().trim(),
       password: hashedPassword,
+      role: userDto.role.toUpperCase(),
     };
     const createdUser = await this.userService.createUser(newUser);
     return {
       accessToken: this.jwtService.sign({
         email: createdUser.email,
         id: createdUser.id,
+        role: createdUser.role.toUpperCase(),
       }),
     };
   }

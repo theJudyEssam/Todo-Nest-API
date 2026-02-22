@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
+import { Role } from 'src/utils/enums/Role';
 
 export class createUserDto {
   // @IsNotEmpty()
@@ -21,4 +22,6 @@ export class updateUserDto {
   email?: string;
 
   password?: string;
+
+  role?: string = Role.USER;
 }

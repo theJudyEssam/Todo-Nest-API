@@ -11,4 +11,7 @@ export class RegisterRequestDto {
 
   @IsNotEmpty()
   name: string;
+
+  @IsNotEmpty()
+  role: string
 }
